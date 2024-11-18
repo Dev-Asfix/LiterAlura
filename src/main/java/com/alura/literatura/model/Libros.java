@@ -1,4 +1,4 @@
 package com.alura.literatura.model;
 
-public class Libros {
+public class DatosLibros {
 }
