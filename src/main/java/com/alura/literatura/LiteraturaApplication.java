@@ -1,5 +1,6 @@
 package com.alura.literatura;
 
+import com.alura.literatura.principal.Principal;
 import com.alura.literatura.service.ConsumoAPI;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -19,9 +20,8 @@ public class LiteraturaApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception{
-		ConsumoAPI consumoAPI = new ConsumoAPI();
-		String json = consumoAPI.consumirApi("https://gutendex.com/books/");
-		System.out.println(json);
+		Principal principal = new Principal();
+		principal.menu();
 	}
 
 

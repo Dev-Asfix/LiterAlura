@@ -1,4 +1,5 @@
 package com.alura.literatura.service;
 
-public class IConversion {
+public interface IConversion {
+    <T> T convertirDatos(String json, Class<T> clase);
 }
