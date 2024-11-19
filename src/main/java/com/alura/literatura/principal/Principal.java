@@ -17,7 +17,6 @@ public class Principal {
     private Conversion conversion = new Conversion();
     private List<DatosLibros> datosLista = new ArrayList<>();
     private List<Autores> datosDeAutores = new ArrayList<>();
-    private List<Libros> librosList = new ArrayList<>();
     private ConsumoAPI consumoAPI = new ConsumoAPI();
     private Libros libros;
 
@@ -136,11 +135,14 @@ public class Principal {
                 """);
         System.out.print("➡️  Ingresa el código del idioma: ");
         var idioma = in.nextLine();
-
-         librosList = datosLista.stream()
-                .filter(libro -> libro.idiomas().contains(idioma))
-                .map(e -> new Libros(e.titulo(),e.descargas(),e.autores(),e.descargas()))
+        // Filtramos los libros por idioma y recolectamos los resultados en una lista
+        // Filtramos los libros por idioma y recolectamos los resultados en una lista
+        List<Libros> librosFiltrados = datosLista.stream()
+                .filter(libro -> libro.idiomas().contains(idioma)) // Filtramos por idioma
+                .map(e -> new Libros(e)) // Mapeamos los libros a objetos Libros
                 .collect(Collectors.toList());
+        librosFiltrados.forEach(System.out::println);
+
 
     }
 
