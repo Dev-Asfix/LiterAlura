@@ -49,6 +49,7 @@ public class Principal {
                         case 1 -> buscarLibroPorTitulo();
                         case 2 -> listarLibros();
                         case 3 -> listarAutores();
+                        case 4 -> listarAutoresVivos();
                         case 0 -> System.out.println("\n ❌ Cerrando aplicación. ¡Hasta luego! 👋");
                         default -> System.out.println("Opcion Invalida");
                     }
@@ -110,8 +111,16 @@ public class Principal {
 
     public void listarAutores(){
         System.out.println(" 🖋️ Listar todos los autores registrados:");
-        datosDeAutores.forEach(e-> System.out.println(e.getNombre()));
+        datosDeAutores.forEach(System.out::println);
+    }
 
+    public void listarAutoresVivos(){
+        System.out.println("Dime el año en el que quieres buscar : ");
+        var numeroAutor = in.nextInt();
+
+        datosDeAutores.stream()
+                .filter(e -> e.getFechaNacimiento() >= numeroAutor)
+                .forEach(System.out::println);
     }
 
 

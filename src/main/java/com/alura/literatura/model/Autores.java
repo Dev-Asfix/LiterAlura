@@ -40,7 +40,8 @@ public class Autores {
     @Override
     public String toString() {
         return
-                "📖 Autor: " + nombre +
+                "------------------------------------"+
+                "\n📖 Autor: " + nombre +
                 "\n🎂 Fecha de nacimiento: " + fechaNacimiento +
                 "\n🪦 Fecha de fallecimiento: " + fechaMuerte ;
     }
