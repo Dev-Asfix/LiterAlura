@@ -52,7 +52,8 @@ public class Libros {
     @Override
     public String toString() {
         return
-                "📚 Título: '"  + titulo  +
+                "-----------------"+
+                "\n📚 Título: '"  + titulo  +
                 "\n✍️ Autores:  " + autores +
                 "\n🌍 Idiomas: "  + idiomas +
                 "\n⬇️ Descargas: " + descargas

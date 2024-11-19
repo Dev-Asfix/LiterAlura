@@ -17,7 +17,9 @@ public class Principal {
     private Conversion conversion = new Conversion();
     private List<DatosLibros> datosLista = new ArrayList<>();
     private List<Autores> datosDeAutores = new ArrayList<>();
+    private List<Libros> librosList = new ArrayList<>();
     private ConsumoAPI consumoAPI = new ConsumoAPI();
+    private Libros libros;
 
 
 
@@ -50,6 +52,7 @@ public class Principal {
                         case 2 -> listarLibros();
                         case 3 -> listarAutores();
                         case 4 -> listarAutoresVivos();
+                        case 5 -> listarLibrosPorIdioma();
                         case 0 -> System.out.println("\n ❌ Cerrando aplicación. ¡Hasta luego! 👋");
                         default -> System.out.println("Opcion Invalida");
                     }
@@ -93,7 +96,7 @@ public class Principal {
 
     public void buscarLibroPorTitulo(){
         DatosLibros datos = getDatos();
-        Libros libros = new Libros(datos);
+        libros = new Libros(datos);
         datosLista.add(datos);
         System.out.println(libros);
 
@@ -121,6 +124,24 @@ public class Principal {
         datosDeAutores.stream()
                 .filter(e -> e.getFechaNacimiento() >= numeroAutor)
                 .forEach(System.out::println);
+    }
+
+    public void listarLibrosPorIdioma(){
+        System.out.println("""
+                en - Inglés
+                es - Español
+                fr - Francés
+                it - Italiano
+                pt - Portugués
+                """);
+        System.out.print("➡️  Ingresa el código del idioma: ");
+        var idioma = in.nextLine();
+
+         librosList = datosLista.stream()
+                .filter(libro -> libro.idiomas().contains(idioma))
+                .map(e -> new Libros(e.titulo(),e.descargas(),e.autores(),e.descargas()))
+                .collect(Collectors.toList());
+
     }
 
 
