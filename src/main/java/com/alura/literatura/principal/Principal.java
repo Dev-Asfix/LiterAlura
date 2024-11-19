@@ -64,8 +64,6 @@ public class Principal {
         } catch (Exception e) {
             System.out.println("Error en " + e);
         }
-
-
     }
 
 
@@ -142,7 +140,6 @@ public class Principal {
                 .map(e -> new Libros(e)) // Mapeamos los libros a objetos Libros
                 .collect(Collectors.toList());
         librosFiltrados.forEach(System.out::println);
-
 
     }
 
