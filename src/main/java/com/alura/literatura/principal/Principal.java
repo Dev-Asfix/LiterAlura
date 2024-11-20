@@ -136,7 +136,8 @@ public class Principal {
 
     public void listarLibros() {
         System.out.println("\n📚 Lista de libros registrados:");
-        datosLista.forEach(e -> System.out.println("- " + e.titulo()));
+        List<Libros> librosList = repository.findAll();
+        librosList.forEach(e -> System.out.println("- " + e.getTitulo()));
     }
 
     public void listarAutores() {
