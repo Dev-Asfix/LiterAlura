@@ -3,18 +3,22 @@ package com.alura.literatura.model;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import jakarta.persistence.*;
 
-//@Entity
-//@Table(name ="autores")
+@Entity
+@Table(name ="autores")
 public class Autores {
 
-  //  @Id
-   // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
     private Integer fechaNacimiento;
     private Integer fechaMuerte;
     private String nombre;
 
+    @ManyToOne
+    private Libros libro;
+
+    public Autores(){}
     public Autores(DatosAutores clase) {
         this.fechaNacimiento = clase.fechaNacimiento();
         this.fechaMuerte = clase.fechaMuerte();
@@ -51,6 +55,14 @@ public class Autores {
 
     public void setId(Long id) {
         Id = id;
+    }
+
+    public Libros getLibros() {
+        return libro;
+    }
+
+    public void setLibros(Libros libro) {
+        this.libro = libro;
     }
 
     @Override

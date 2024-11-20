@@ -4,20 +4,23 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
-//@Entity
-//@Table(name = "libros")
+@Entity
+@Table(name = "libros")
 public class Libros {
-  //  @Id
-   // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    //@Column(unique = true)
+    @Column(unique = true)
     private String titulo;
 
+    @OneToMany(mappedBy = "libro", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Autores> autores;
     private List<String> idiomas;
     private Integer descargas;
 
+
+    public Libros(){}
     public Libros(DatosLibros datosLibros) {
         this.titulo = datosLibros.titulo();
         this.idiomas = datosLibros.idiomas();
@@ -33,13 +36,6 @@ public class Libros {
         this.descargas = descargas;
     }
 
-    public List<String> getLenguajes() {
-        return idiomas;
-    }
-
-    public void setLenguajes(List<String> lenguajes) {
-        this.idiomas = lenguajes;
-    }
 
 
     public String getTitulo() {
@@ -72,6 +68,7 @@ public class Libros {
     }
 
     public void setAutores(List<Autores> autores) {
+        autores.forEach(e -> e.setLibros(this));
         this.autores = autores;
     }
 
