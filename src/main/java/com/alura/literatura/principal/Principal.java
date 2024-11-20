@@ -142,6 +142,7 @@ public class Principal {
 
     public void listarAutores() {
         System.out.println(" 🖋️ Listar todos los autores registrados:");
+        //List<Autores>  autoresList = repository.findAllAutoresWithLibros();
         datosDeAutores.forEach(System.out::println);
     }
 

@@ -3,6 +3,9 @@ package com.alura.literatura.model;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name ="autores")
 public class Autores {
@@ -15,8 +18,10 @@ public class Autores {
     private Integer fechaMuerte;
     private String nombre;
 
-    @ManyToOne
-    private Libros libro;
+    @ManyToMany(mappedBy = "autores", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Libros> libros = new ArrayList<>();
+
+
 
     public Autores(){}
     public Autores(DatosAutores clase) {
@@ -57,12 +62,12 @@ public class Autores {
         Id = id;
     }
 
-    public Libros getLibros() {
-        return libro;
+    public List<Libros> getLibros() {
+        return libros;
     }
 
-    public void setLibros(Libros libro) {
-        this.libro = libro;
+    public void setLibros(List<Libros> libros) {
+        this.libros = libros;
     }
 
     @Override
