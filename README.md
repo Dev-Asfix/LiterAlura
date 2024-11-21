@@ -88,7 +88,4 @@ principal: Controla la interacción con el usuario y define el flujo principal d
 ![Listar Libros por Idioma](recursos/listar-idioma.png)
 
 
-💡 Futuras Mejoras
-Crear una interfaz gráfica con JavaFX.
-Añadir soporte para múltiples bases de datos.
-Implementar autenticación y manejo de usuarios.
+Thanks!
