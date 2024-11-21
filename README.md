@@ -85,7 +85,7 @@ principal: Controla la interacción con el usuario y define el flujo principal d
 ![Listar Autores por Año](recursos/listar-año.png)
 
 ### Listar Libros por Idioma
-![Listar Libros por Idioma](recursos/listar-idiomas.png)
+![Listar Libros por Idioma](recursos/listar-idioma.png)
 
 
 💡 Futuras Mejoras
