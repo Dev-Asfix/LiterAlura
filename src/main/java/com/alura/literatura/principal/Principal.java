@@ -127,6 +127,7 @@ public class Principal {
         try {
             repository.save(libros);
             System.out.println("✅ El libro '" + titulo + "' ha sido registrado exitosamente.");
+
         } catch (Exception e) {
             System.err.println("❌ Error al guardar el libro: " + e.getMessage());
         }
@@ -140,7 +141,7 @@ public class Principal {
     public void listarLibros() {
         System.out.println("\n📚 Lista de libros registrados:");
         List<Libros> librosList = repository.findAll();
-        librosList.forEach(e -> System.out.println("- " + e.getTitulo()));
+        librosList.forEach(System.out::println);
     }
 
     public void listarAutores() {
