@@ -75,8 +75,12 @@ public class Libros {
     }
 
     public void setAutores(List<Autores> autores) {
-        autores.forEach(e -> e.setLibros(this));
         this.autores = autores;
+    }
+
+    public void agregarAutor(Autores autor){
+        this.autores.add(autor);
+        autor.getLibros().add(this);
     }
 
     @Override

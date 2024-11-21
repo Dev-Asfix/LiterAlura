@@ -70,6 +70,12 @@ public class Autores {
         this.libros = libros;
     }
 
+    public void agregarLibros(Libros libro){
+        this.libros.add(libro);
+        libro.getAutores().add(this);
+
+    }
+
     @Override
     public String toString() {
         return
