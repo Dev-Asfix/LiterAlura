@@ -102,37 +102,40 @@ public class Principal {
         libros = new Libros(datos);
         datosLista.add(datos);
 
-        Optional<Libros> librosOptional = listLibros.stream()
-                .filter(l -> l.getTitulo().toLowerCase().contains(titulo))
-                .findFirst();
-
-        if (librosOptional.isPresent()) {
-
+        // Validar en memoria
+        if (listLibros.stream().anyMatch(l -> l.getTitulo().equalsIgnoreCase(titulo))) {
             System.out.println("❌ El libro con el título '" + titulo + "' ya está registrado.");
-
-        } else {
-
-            Optional<Libros> libroEnBaseDeDatos = repository.findByTituloContainsIgnoreCase(titulo);
-
-            if (libroEnBaseDeDatos.isPresent()) {
-                // Si el libro ya existe en la base de datos, muestra un mensaje
-                System.out.println("❌ El libro con el título '" + titulo + "' ya existe en la base de datos.");
-            } else {
-                List<Autores> datosAutores = datos.autores().stream()
-                        .map(autor -> new Autores(new DatosAutores(autor.nombre(), autor.fechaNacimiento(), autor.fechaMuerte())))
-                        .collect(Collectors.toList());
-
-
-                libros.setAutores(datosAutores);
-                this.datosDeAutores.addAll(datosAutores);
-                repository.save(libros);
-                System.out.println(libros);
-                System.out.println("✅ El libro '" + titulo + "' ha sido registrado exitosamente.");
-            }
+            return;
         }
 
+        // Validar en la base de datos
+        if (repository.findByTituloContainsIgnoreCase(titulo).isPresent()) {
+            System.out.println("❌ El libro con el título '" + titulo + "' ya existe en la base de datos.");
+            return;
+        }
 
+        // Crear autores y asignarlos al libro
+        List<Autores> datosAutores = datos.autores().stream()
+                .distinct()
+                .map(autor -> new Autores(new DatosAutores(autor.nombre(), autor.fechaNacimiento(), autor.fechaMuerte())))
+                .collect(Collectors.toList());
+
+        libros.setAutores(datosAutores);
+        this.datosDeAutores.addAll(datosAutores);
+
+        // Guardar en la base de datos
+        try {
+            repository.save(libros);
+            System.out.println("✅ El libro '" + titulo + "' ha sido registrado exitosamente.");
+        } catch (Exception e) {
+            System.err.println("❌ Error al guardar el libro: " + e.getMessage());
+        }
     }
+
+
+
+
+
 
     public void listarLibros() {
         System.out.println("\n📚 Lista de libros registrados:");
@@ -143,16 +146,35 @@ public class Principal {
     public void listarAutores() {
         System.out.println(" 🖋️ Listar todos los autores registrados:");
         //List<Autores>  autoresList = repository.findAllAutoresWithLibros();
-        datosDeAutores.forEach(System.out::println);
+        List<Autores> autoresList = repository.findAllAutoresWithLibros();
+        if(autoresList.isEmpty()){
+            System.out.println("❌ No hay autores registrados.");
+        } else {
+            autoresList.forEach(autores -> {
+                System.out.println(autores);
+                System.out.println("📚 Libros de este autor (" +autores.getLibros().size() + "):");
+
+                autores.getLibros().forEach( libros1 ->
+                        System.out.println(" -" + libros1.getTitulo()));
+            });
+        }
+
     }
 
     public void listarAutoresVivos() {
         System.out.println("Dime el año en el que quieres buscar : ");
         var numeroAutor = in.nextInt();
 
-        datosDeAutores.stream()
-                .filter(e -> e.getFechaNacimiento() >= numeroAutor)
-                .forEach(System.out::println);
+        //datosDeAutores.stream()
+         //       .filter(e -> e.getFechaNacimiento() >= numeroAutor)
+          //      .forEach(System.out::println);
+
+        List<Autores> autores = repository.findAutoresVivosDesde(numeroAutor);
+        if(autores.isEmpty()){
+            System.out.println("No se encontraron autores vivos desde el año " + numeroAutor);
+        } else {
+            autores.forEach(System.out::println);
+        }
     }
 
     public void listarLibrosPorIdioma() {
@@ -167,11 +189,18 @@ public class Principal {
         var idioma = in.nextLine();
         // Filtramos los libros por idioma y recolectamos los resultados en una lista
         // Filtramos los libros por idioma y recolectamos los resultados en una lista
-        List<Libros> librosFiltrados = datosLista.stream()
-                .filter(libro -> libro.idiomas().contains(idioma)) // Filtramos por idioma
-                .map(e -> new Libros(e)) // Mapeamos los libros a objetos Libros
-                .collect(Collectors.toList());
-        librosFiltrados.forEach(System.out::println);
+        //List<Libros> librosFiltrados = datosLista.stream()
+        //        .filter(libro -> libro.idiomas().contains(idioma)) // Filtramos por idioma
+        //        .map(e -> new Libros(e)) // Mapeamos los libros a objetos Libros
+        //        .collect(Collectors.toList());
+        //librosFiltrados.forEach(System.out::println);
+
+        List<Libros> librosList = repository.findLibrosByIdioma(idioma);
+        if(librosList.isEmpty()){
+            System.out.println("No se encontraron libros en el idioma seleccionado: " + idioma);
+        } else {
+            librosList.forEach(System.out::println);
+        }
 
     }
 

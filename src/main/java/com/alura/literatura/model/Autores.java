@@ -18,7 +18,7 @@ public class Autores {
     private Integer fechaMuerte;
     private String nombre;
 
-    @ManyToMany(mappedBy = "autores", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "autores", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Libros> libros = new ArrayList<>();
 
 
@@ -84,4 +84,6 @@ public class Autores {
                 "\n🎂 Fecha de nacimiento: " + fechaNacimiento +
                 "\n🪦 Fecha de fallecimiento: " + fechaMuerte ;
     }
+
+
 }

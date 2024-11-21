@@ -10,8 +10,23 @@ import java.util.Optional;
 
 
 public interface SerieRepository  extends JpaRepository<Libros, Long>{
+    // Buscar libros por título (ya existente)
     Optional<Libros> findByTituloContainsIgnoreCase(String titulo);
 
-    //@Query("SELECT a FROM autores a JOIN FETCH a.libro_id")
-    //List<Autores> findAllAutoresWithLibros();
+    // Buscar autores por nombre
+    @Query("SELECT a FROM Autores a WHERE LOWER(a.nombre) = LOWER(:nombre)")
+    Optional<Autores> findByNombreIgnoreCase(String nombre);
+
+    // Recuperar todos los autores con sus libros
+    @Query("SELECT a FROM Autores a JOIN FETCH a.libros")
+    List<Autores> findAllAutoresWithLibros();
+
+    @Query("SELECT a FROM Autores a WHERE a.fechaNacimiento >= :fecha")
+    List<Autores> findAutoresVivosDesde(Integer fecha);
+
+    @Query(value = "SELECT * FROM libros l WHERE :idioma = ANY (l.idiomas)", nativeQuery = true)
+    List<Libros> findLibrosByIdioma(String idioma);
+
+
+
 }
