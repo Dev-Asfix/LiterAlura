@@ -64,6 +64,8 @@ model: Define las entidades de la base de datos.
 repository: Gestiona las operaciones CRUD con JPA.
 service: Contiene lógica para consumir la API y convertir datos JSON.
 principal: Controla la interacción con el usuario y define el flujo principal de la aplicación.
+```
+
 📸 Capturas de Pantalla
 ## 📸 Capturas de Pantalla
 
